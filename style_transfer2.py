@@ -142,4 +142,4 @@ if __name__ == '__main__':
     final_img = minimize(get_loss_and_grads_wrapper, 10, batch_shape)
     plt.imshow(scale_img(final_img))
     plt.show()
-    plt.imsave('.\\results\\styleTransfer2\\style.jpg',scale_img(final_img))
+    plt.imsave('only_style.jpg',scale_img(final_img))
