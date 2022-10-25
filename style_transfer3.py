@@ -147,7 +147,7 @@ def get_loss_and_grads_wrapper(x_vec):
 
 final_img = minimize(get_loss_and_grads_wrapper, 6, batch_shape)
 
-plt.imsave('.\\results\\styleTransfer3\\nst.jpg',scale_img(final_img))
+plt.imsave('nst.jpg',scale_img(final_img))
 plt.imshow(scale_img(final_img))
 plt.show()
 
