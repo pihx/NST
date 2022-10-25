@@ -177,7 +177,7 @@ if __name__ == '__main__':
     #reverse the preprocessing, to be able to display it
     final_img = unpreprocess(newimg)
     #scale the image before plotting it.
-    plt.imsave('.\\results\\styleTransfer1\\content.jpg',scale_img(final_img[0]))
+    plt.imsave('only_content.jpg',scale_img(final_img[0]))
     plt.imshow(scale_img(final_img[0]))
     plt.show()
     
