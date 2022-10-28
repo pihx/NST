@@ -155,7 +155,7 @@ if __name__ == '__main__':
     losses = []
     x = np.random.randn(np.prod(batch_shape))
     #range(i), where i is epochs/iterations
-    for i in range(10):
+    for i in range(4):
         # optimize the image
         x, l, _ = fmin_l_bfgs_b(
             func=get_loss_and_grads_wrapper,
