@@ -145,7 +145,7 @@ def get_loss_and_grads_wrapper(x_vec):
     return l.astype(np.float64), g.flatten().astype(np.float64)
 
 
-final_img = minimize(get_loss_and_grads_wrapper, 4, batch_shape)
+final_img = minimize(get_loss_and_grads_wrapper, 5, batch_shape)
 
 plt.imsave('nst.jpg',scale_img(final_img))
 plt.imshow(scale_img(final_img))

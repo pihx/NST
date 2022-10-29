@@ -139,7 +139,7 @@ if __name__ == '__main__':
         l, g = get_loss_and_grads([x_vec.reshape(*batch_shape)])
         return l.astype(np.float64), g.flatten().astype(np.float64)
 
-    final_img = minimize(get_loss_and_grads_wrapper, 4, batch_shape)
+    final_img = minimize(get_loss_and_grads_wrapper, 5, batch_shape)
     plt.imshow(scale_img(final_img))
     plt.show()
     plt.imsave('only_style.jpg',scale_img(final_img))
