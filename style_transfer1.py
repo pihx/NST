@@ -2,12 +2,6 @@
 # https://www.udemy.com/advanced-computer-vision
 from __future__ import print_function, division
 from builtins import range, input
-# Note: you may need to update your version of future
-# sudo pip install -U future
-
-# In this script, we will focus on generating the content
-# E.g. given an image, can we recreate the same image
-
 
 from keras.layers import Input, Lambda, Dense, Flatten
 from keras.layers import AveragePooling2D, MaxPooling2D

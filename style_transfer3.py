@@ -1,14 +1,8 @@
 # https://deeplearningcourses.com/c/advanced-computer-vision
 # https://www.udemy.com/advanced-computer-vision
 
-#__future__ allows introducing new behavior into the language 
-# that would be backwards-incompatible.
 from __future__ import print_function, division
-
 from builtins import range, input
-# Note: you may need to update your version of future
-
-
 
 # In this script, we will focus on generating an image
 
@@ -24,18 +18,55 @@ from keras.layers.convolutional import Conv2D
 from keras.models import Model, Sequential
 from keras.applications.vgg16 import VGG16
 from keras.applications.vgg16 import preprocess_input
-#from keras.preprocessing import image
 from keras_preprocessing import image
 
 from skimage.transform import resize
-
 import keras.backend as K
 import numpy as np
 import matplotlib.pyplot as plt
+import time
+from datetime import datetime, date
+
 
 from style_transfer1 import VGG16_AvgPool, VGG16_AvgPool_CutOff, unpreprocess, scale_img
-from style_transfer2 import gram_matrix, style_loss, minimize
+from style_transfer2 import gram_matrix, style_loss
+# from style_transfer2 import gram_matrix, style_loss, minimize
 from scipy.optimize import fmin_l_bfgs_b
+
+# Empty data.txt file to store training times
+filename = "./data.txt"
+target = open(filename,'w')
+target.truncate()
+target.close()
+
+def minimize(fn, epochs, batch_shape):
+    target = open(filename,'a+')
+    t0 = datetime.now()
+    losses = []
+    x = np.random.randn(np.prod(batch_shape))
+    
+   
+    for i in range(epochs):
+        x, l, _ = fmin_l_bfgs_b(
+            func=fn,
+            x0=x,
+            maxfun=20
+        )
+        
+        x = np.clip(x, -127, 127)
+        print("iter=%s, loss=%s" % (i, l))
+        losses.append(l)
+    ttotal = (datetime.now() - t0 )
+    print("duration:", ttotal)
+    plt.plot(losses)
+    plt.show()
+    target.write(str(ttotal.seconds))
+    target.write("\n")
+    target.close()
+
+    newimg = x.reshape(*batch_shape)
+    final_img = unpreprocess(newimg)
+    return final_img[0]
 
 
 # load the content image

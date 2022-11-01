@@ -3,6 +3,8 @@
 from __future__ import print_function, division
 from builtins import range, input
 
+filename = "./data.txt"
+
 # In this script, we will focus on generating an image
 # with the same style as the input image.
 # But NOT the same content.
@@ -23,7 +25,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import keras.backend as K
 
-
 def gram_matrix(img):
     # input is (H, W, C) (C = # feature maps)
     # we first need to convert it to (C, H*W)
@@ -42,6 +43,7 @@ def style_loss(y, t):
 
 # let's generalize this and put it into a function
 def minimize(fn, epochs, batch_shape):
+    target = open(filename,'a+')
     t0 = datetime.now()
     losses = []
     x = np.random.randn(np.prod(batch_shape))
@@ -57,10 +59,13 @@ def minimize(fn, epochs, batch_shape):
         x = np.clip(x, -127, 127)
         print("iter=%s, loss=%s" % (i, l))
         losses.append(l)
-
-    print("duration:", datetime.now() - t0)
+    ttotal = (datetime.now() - t0 )
+    print("duration:", ttotal)
     plt.plot(losses)
     plt.show()
+    target.write(str(ttotal.seconds))
+    target.write("\n")
+    target.close()
 
     newimg = x.reshape(*batch_shape)
     final_img = unpreprocess(newimg)
@@ -72,7 +77,6 @@ if __name__ == '__main__':
     path = 'styles/starrynight.jpg'
     # path = 'styles/flowercarrier.jpg'
     # path = 'styles/monalisa.jpg'
-    # path = 'styles/lesdemoisellesdavignon.jpg'
 
     # load the data
     img = image.load_img(path)
@@ -80,10 +84,7 @@ if __name__ == '__main__':
     # convert image to array and preprocess for vgg
     x = image.img_to_array(img)
 
-    # look at the image
-    # plt.imshow(x)
-    # plt.show()
-
+    
     # make it (1, H, W, C)
     x = np.expand_dims(x, axis=0)
 
