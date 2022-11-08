@@ -43,7 +43,7 @@ def style_loss(y, t):
 
 # let's generalize this and put it into a function
 def minimize(fn, epochs, batch_shape):
-    target = open(filename,'a+')
+    target = open(filename,'w+')
     t0 = datetime.now()
     losses = []
     x = np.random.randn(np.prod(batch_shape))
